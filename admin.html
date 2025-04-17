@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Barangay Health Monitoring System</title>
+  <style>
+    /* global Styles */
+    * {
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* header styles */
+    header {
+      background: linear-gradient(135deg, #1e8449 0%, #2874a6 100%);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+      margin-bottom: 20px;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    
+    header p {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    /* login form for separate page for workers */
+    .login-form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto 30px;
+    }
+    
+    .login-form h2 {
+      color: #2874a6;
+      border-bottom: 2px solid #1e8449;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #1e8449 0%, #2874a6 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .error-message {
+      color: #dc3545;
+      margin-top: 10px;
+      display: none;
+    }
+    
+    /* results Section */
+    .results-section {
+      background-color: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    
+    .results-section h2 {
+      color: #2874a6;
+      border-bottom: 2px solid #1e8449;
+      padding-bottom: 10px;
+    }
+    
+    /* table styles */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 650px; /* ensures table doesn't get too squished */
+    }
+    
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    th {
+      background-color: #2874a6;
+      color: white;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #e3f2fd;
+    }
+    
+    /* responsive design */
+    @media (max-width: 768px) {
+      th, td {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+      
+      .container {
+        width: 95%;
+      }
+      
+      /* additional responsive styles for the table */
+      .table-container {
+        margin-bottom: 15px;
+        -webkit-overflow-scrolling: touch; 
+      }
+      
+      .table-scroll-indicator {
+        display: block;
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+    }
+    
+    /* Print styles button */
+    @media print {
+      body {
+        background-color: white;
+      }
+      
+      .container {
+        width: 100%;
+        max-width: none;
+      }
+      
+      header {
+        background: none;
+        color: black;
+        padding: 10px 0;
+      }
+      
+      .login-form, 
+      .back-button,
+      .print-button {
+        display: none;
+      }
+      
+      .results-section {
+        display: block !important;
+        box-shadow: none;
+        padding: 0;
+      }
+      
+      table {
+        border: 1px solid #000;
+      }
+      
+      th {
+        background-color: #f2f2f2 !important;
+        color: black;
+      }
+      
+      .table-scroll-indicator {
+        display: none;
+      }
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .print-button {
+      background: #6c757d;
+    }
+    
+    .back-button {
+      background: #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Barangay Health Monitoring System</h1>
+      <p>Health Worker Access</p>
+    </div>
+  </header>
+  
+  <div class="container">
+    <!-- log in form code-->
+    <div class="login-form" id="loginForm">
+      <h2>Barangay Health Worker Login</h2>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+        <p class="error-message" id="errorMessage">Incorrect password. Please try again.</p>
+      </div>
+      <button id="loginButton">Access Health Records</button>
+    </div>
+    
+    <!-- results Section (initially hidden) -->
+    <div class="results-section" id="resultsSection">
+      <h2>Community Health Data</h2>
+      <p>Below is the collected health information from our barangay residents:</p>
+      
+      <div class="table-scroll-indicator" id="scrollIndicator">Swipe horizontally to view all data →</div>
+      <div class="table-container">
+        <table id="resultsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Address</th>
+              <th>Vaccination</th>
+              <th>Symptoms</th>
+              <th>Last Checkup</th>
+              <th>Submission Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- table body will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="actions">
+        <button class="back-button" onclick="window.location.href='index.html'">Back to Form</button>
+        <button class="print-button" onclick="window.print()">Print Report</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // password for admin access
+    const ADMIN_PASSWORD = "barangay123"; // pwede mo sya ichange pass if you want
+    
+    // handle login
+    document.getElementById('loginButton').addEventListener('click', function() {
+      const password = document.getElementById('password').value;
+      
+      if (password === ADMIN_PASSWORD) {
+        // hide login form (then proceeds to show results section)
+        document.getElementById('loginForm').style.display = 'none';
+        
+        // show results section
+        document.getElementById('resultsSection').style.display = 'block';
+        
+        // load data from localStorage
+        loadHealthRecords();
+      } else {
+        // show error message
+        document.getElementById('errorMessage').style.display = 'block';
+      }
+    });
+    
+    // function to load health records from localStorage
+    function loadHealthRecords() {
+      const healthRecords = JSON.parse(localStorage.getItem('healthRecords')) || [];
+      const tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+      
+      // clear existing rows
+      tableBody.innerHTML = '';
+      
+      // add records to table
+      healthRecords.forEach(record => {
+        const newRow = tableBody.insertRow();
+        
+        // format date for display
+        const submissionDate = new Date(record.submittedAt).toLocaleDateString();
+        
+        newRow.innerHTML = `
+          <td>${record.name}</td>
+          <td>${record.age}</td>
+          <td>${record.gender}</td>
+          <td>${record.address}</td>
+          <td>${record.vaccination}</td>
+          <td>${record.symptoms}</td>
+          <td>${record.lastCheckup}</td>
+          <td>${submissionDate}</td>
+        `;
+      });
+      
+      // show scroll indicator on mobile
+      if (window.innerWidth < 768) {
+        document.getElementById('scrollIndicator').style.display = 'block';
+        
+        // hide after 5 seconds
+        setTimeout(() => {
+          document.getElementById('scrollIndicator').style.display = 'none';
+        }, 5000);
+      } else {
+        document.getElementById('scrollIndicator').style.display = 'none';
+      }
+    }
+    
+    // update scroll indicator visibility on resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth < 768 && document.getElementById('resultsSection').style.display === 'block') {
+        document.getElementById('scrollIndicator').style.display = 'block';
+      } else {
+        document.getElementById('scrollIndicator').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
