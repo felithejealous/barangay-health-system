@@ -8,7 +8,7 @@
     /* global styles */
     * {
       box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
+      font-family: netflix sans;
     }
     
     body {
@@ -27,14 +27,29 @@
     
     /* header */
     header {
-      background: linear-gradient(135deg, #1e8449 0%, #2874a6 100%);
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-      border-radius: 8px 8px 0 0;
-      margin-bottom: 20px;
-    }
-    
+  color:  #010102 ;
+  padding: 50px 0;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 20px;
+  position: relative; /* Required for positioning the pseudo-element */
+  z-index: 1; /* Ensure text is above the blurred background */
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('barangay.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  z-index: -1; /* Place the blurred background behind the text */
+  border-radius: 8px 8px 0 0;
+}
     header h1 {
       margin: 0;
       font-size: 2rem;
@@ -75,7 +90,7 @@
     }
     
     button {
-      background: linear-gradient(135deg, #1e8449 0%, #2874a6 100%);
+      background: linear-gradient(135deg,  #2874a6 100%);
       color: white;
       border: none;
       padding: 12px 20px;
