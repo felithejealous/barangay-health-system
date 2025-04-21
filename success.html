@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submission Successful - Barangay Health Monitoring System</title>
+  <style>
+    /* global styles */
+    * {
+      box-sizing: border-box;
+      font-family: netflix sans;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    
+    header {
+  color:  #010102 ;
+  padding: 50px 0;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 20px;
+  position: relative; 
+  z-index: 1; 
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('barangay.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  z-index: -1;  /* for bg blur */
+}
+
+header {
+  color:  #010102 ;
+  border-radius: 8px 8px 0 0;
+}
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); /* ffor better readability */
+    }
+    
+    header p {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      opacity: 0.9;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); 
+    }
+    
+    /* message container */
+    .success-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .success-icon {
+      font-size: 80px;
+      color: #1e8449;
+      margin-bottom: 20px;
+    }
+    
+    .success-title {
+      color: #2874a6;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    
+    .success-message {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    
+    button {
+      background:#2874a6;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    /* responsive design */
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+      }
+      
+      .success-container {
+        padding: 30px 20px;
+      }
+      
+      .success-icon {
+        font-size: 60px;
+      }
+      
+      .success-title {
+        font-size: 24px;
+      }
+    }
+
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    @media (max-width: 480px) {
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Barangay Health Monitoring System</h1>
+      <p>Help us monitor and improve the health of our community</p>
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="success-container">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">Submission Successful!</h2>
+      <p class="success-message">
+        Thank you for submitting your health information. Your data has been recorded and will help us monitor and improve the health of our community.
+      </p>
+      <p class="success-message">
+        If you have any questions or need to update your information, please contact your local Barangay Health Center.
+      </p>
+      <div class="action-buttons">
+        <button onclick="window.location.href='survey.html'">Submit Another Response</button>
+        <button onclick="window.location.href='index.html'">Return to Home</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

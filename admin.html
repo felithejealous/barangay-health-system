@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Barangay Health Monitoring System</title>
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+      font-family: netflix sans, sans-serif;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+ 
+    
+    /* Results Section */
+    .results-section {
+      background-color: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .results-section h2 {
+      color: #2874a6;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 10px;
+    }
+    
+    /* Table styles */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 650px; 
+    }
+    
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    th {
+      background-color: #2874a6;
+      color: white;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #e3f2fd;
+    }
+    
+    /*  buttons */
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    button {
+      background: #2874a6;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .print-button {
+      background: #6c757d;
+    }
+    
+    .back-button {
+      background: #6c757d;
+    }
+    
+    /*  scroll indicator, responsive */
+    .table-scroll-indicator {
+      display: none;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    
+    /* cack link option*/
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #2874a6;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* responsive design */
+    @media (max-width: 768px) {
+      th, td {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+      
+      .container {
+        width: 95%;
+      }
+      
+      /*  responsive styles for the table */
+      .table-container {
+        margin-bottom: 15px;
+        -webkit-overflow-scrolling: touch; 
+      }
+      
+      .table-scroll-indicator {
+        display: block;
+      }
+    }
+    
+    /* print styles */
+    @media print {
+      body {
+        background-color: white;
+      }
+      
+      .container {
+        width: 100%;
+        max-width: none;
+      }
+      
+      header {
+        background: none;
+        color: black;
+        padding: 10px 0;
+      }
+      
+      .back-link,
+      .back-button,
+      .print-button {
+        display: none;
+      }
+      
+      .results-section {
+        box-shadow: none;
+        padding: 0;
+      }
+      
+      table {
+        border: 1px solid #000;
+      }
+      
+      th {
+        background-color: #f2f2f2 !important;
+        color: black;
+      }
+      
+      .table-scroll-indicator {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    
+  
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    
+    <!-- results section table-->
+    <div class="results-section">
+      <h2>Community Health Data</h2>
+      <p>Below is the collected health information from our barangay residents:</p>
+      
+      <div class="table-scroll-indicator" id="scrollIndicator">Swipe horizontally to view all data →</div>
+      <div class="table-container">
+        <table id="resultsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Address</th>
+              <th>Vaccination</th>
+              <th>Symptoms</th>
+              <th>Last Checkup</th>
+              <th>Additional Health Notes</th>
+              <th>Submission Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- table with JavaScript -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="actions">
+        <button class="back-button" onclick="window.location.href='survey.html'">Back to Survey Form</button>
+        <button class="print-button" onclick="window.print()">Print Report</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // check if user came from password page
+    if (!document.referrer.includes('password.html')) {
+      // if not, redirect to password page
+      window.location.href = 'password.html';
+    }
+    
+    // function to load health records from localStorage
+    function loadHealthRecords() {
+      const healthRecords = JSON.parse(localStorage.getItem('healthRecords')) || [];
+      const tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+      
+      // clear existing rows
+      tableBody.innerHTML = '';
+      
+      // add records to table
+      healthRecords.forEach(record => {
+        const newRow = tableBody.insertRow();
+        
+        // format date for display
+        const submissionDate = new Date(record.submittedAt).toLocaleDateString();
+        
+        newRow.innerHTML = `
+          <td>${record.name}</td>
+          <td>${record.age}</td>
+          <td>${record.gender}</td>
+          <td>${record.address}</td>
+          <td>${record.vaccination}</td>
+          <td>${record.symptoms}</td>
+          <td>${record.lastCheckup}</td>
+          <td>${record.healthNotes}</td>
+          <td>${submissionDate}</td>
+        `;
+      });
+      
+      // for mobile ophone indicator
+      if (window.innerWidth < 768) {
+        document.getElementById('scrollIndicator').style.display = 'block';
+        
+        // transi
+        setTimeout(() => {
+          document.getElementById('scrollIndicator').style.display = 'none';
+        }, 5000);
+      } else {
+        document.getElementById('scrollIndicator').style.display = 'none';
+      }
+    }
+    
+    //  health records when page loads
+    window.addEventListener('DOMContentLoaded', loadHealthRecords);
+    
+    // update scroll indicator visibility on resize if added something
+    window.addEventListener('resize', function() {
+      if (window.innerWidth < 768) {
+        document.getElementById('scrollIndicator').style.display = 'block';
+      } else {
+        document.getElementById('scrollIndicator').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

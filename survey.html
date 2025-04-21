@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barangay Health Monitoring System</title>
+  <style>
+    /* Global Styles panglahat na */
+    * {
+      box-sizing: border-box;
+      font-family: netflix sans;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header Styles ung header basta para di malito */
+    header {
+  color:  #010102 ;
+  padding: 50px 0;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 20px;
+  position: relative; 
+  z-index: 1; 
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('barangay.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  z-index: -1; /* Place the blurred background behind the text */
+  border-radius: 8px 8px 0 0;
+}
+    
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); /* shadows for text */
+    }
+    
+    header p {
+      margin: 10px 0 0;
+      font-size: 1rem;
+      opacity: 0.9;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8); 
+    }
+    
+    /* Form */
+    .survey-form {
+      background-color: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .form-section {
+      margin-bottom: 25px;
+    }
+    
+    .form-section h2 {
+      color: #2874a6;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="password"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 5px;
+    }
+    
+    .radio-group label,
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    
+    button {
+      background:#2874a6;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    /* Responsive ldesign para aesthetic */
+    @media (max-width: 768px) {
+      .radio-group,
+      .checkbox-group {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .container {
+        width: 95%;
+      }
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .admin-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #2874a6;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .admin-link:hover {
+      text-decoration: underline;
+    }
+
+   
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #2874a6;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .back-button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Barangay 530 Health Monitoring System</h1>
+      <p>Help us monitor and improve the health of our community</p>
+    </div>
+  </header>
+  
+  <div class="container">
+    <a href="index.html" class="back-button">← Back to Home</a>
+    
+    <div class="survey-form">
+      <form id="healthSurveyForm">
+        <div class="form-section">
+          <h2>Personal Information</h2>
+          
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="1" max="120" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="radio-group">
+              <label>
+                <input type="radio" name="gender" value="Male" required> Male
+              </label>
+              <label>
+                <input type="radio" name="gender" value="Female"> Female
+              </label>
+              <label>
+                <input type="radio" name="gender" value="Other"> Other
+              </label>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="address">Address</label>
+            <select id="address" name="address" required>
+              <option value="">Select your Purok</option>
+              <option value="Purok 1">Purok 1</option>
+              <option value="Purok 2">Purok 2</option>
+              <option value="Purok 3">Purok 3</option>
+              <option value="Purok 4">Purok 4</option>
+              <option value="Purok 5">Purok 5</option>
+              <option value="Purok 5">Purok 6</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-section">
+          <h2>Health Status</h2>
+          
+          <div class="form-group">
+            <label for="vaccinationStatus">Vaccination Status</label>
+            <select id="vaccinationStatus" name="vaccinationStatus" required>
+              <option value="">Select your status</option>
+              <option value="✔️ Vaccinated">✔️ Vaccinated</option>
+              <option value="❌ Unvaccinated">❌ Unvaccinated</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Recent Symptoms (if any)</label>
+            <div class="checkbox-group">
+              <label>
+                <input type="checkbox" name="symptoms" value="Fever"> Fever
+              </label>
+              <label>
+                <input type="checkbox" name="symptoms" value="Cough"> Cough
+              </label>
+              <label>
+                <input type="checkbox" name="symptoms" value="Fatigue"> Fatigue
+              </label>
+              <label>
+                <input type="checkbox" name="symptoms" value="Headache"> Headache
+              </label>
+              <label>
+                <input type="checkbox" name="symptoms" value="Sore Throat"> Sore Throat
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="lastCheckup">Last Medical Checkup</label>
+            <input type="date" id="lastCheckup" name="lastCheckup" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="healthNotes">Additional Health Notes</label>
+            <textarea id="healthNotes" name="healthNotes" rows="4"></textarea>
+          </div>
+        </div>
+        
+        <button type="submit">Submit Health Information</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    // Initialize health records array in localStorage if hindi sya nageexist
+    if (!localStorage.getItem('healthRecords')) {
+      localStorage.setItem('healthRecords', JSON.stringify([]));
+    }
+    
+    document.getElementById('healthSurveyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+    
+      const name = document.getElementById('fullName').value;
+      const age = document.getElementById('age').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const address = document.getElementById('address').value;
+      const vaccination = document.getElementById('vaccinationStatus').value;
+      
+      const symptomsChecked = document.querySelectorAll('input[name="symptoms"]:checked');
+      let symptoms = Array.from(symptomsChecked).map(el => el.value).join(', ');
+      if (symptoms === '') symptoms = 'None';
+      
+      const lastCheckup = document.getElementById('lastCheckup').value;
+      const healthNotes = document.getElementById('healthNotes').value;
+      
+      // create record object
+      const healthRecord = {
+        name,
+        age,
+        gender,
+        address,
+        vaccination,
+        symptoms,
+        lastCheckup,
+        healthNotes,
+        submittedAt: new Date().toISOString()
+      };
+      
+      // Get existing records from localstorage
+      const existingRecords = JSON.parse(localStorage.getItem('healthRecords')) || [];
+      
+      // add new record
+      existingRecords.push(healthRecord);
+      
+      // Save back to localStorage
+      localStorage.setItem('healthRecords', JSON.stringify(existingRecords));
+      
+      // Redirect to success page
+      window.location.href = 'success.html';
+    });
+  </script>
+</body>
+</html>
